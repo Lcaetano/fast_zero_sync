@@ -11,13 +11,11 @@ from zoneinfo import ZoneInfo
 
 from fast_zero.databse import get_session
 from fast_zero.models import User
+from fast_zero.settings import Settings
 
 pwd_conxtext = PasswordHash.recommended()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
-
-SECRET_KEY = 'fast_zero'
-ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/token')
+sttings = Settings()
 
 
 def get_password_hash(password: str):
@@ -32,12 +30,16 @@ def create_access_token(data: dict):
     to_encode = data.copy()
 
     expire = datetime.now(tz=ZoneInfo('UTC')) + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        minutes=sttings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
     to_encode.update({'exp': expire})
 
-    encode_jwt = encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encode_jwt = encode(
+        to_encode,
+        sttings.SECRET_KEY,
+        algorithm=sttings.ALGORITHM
+    )
 
     return encode_jwt
 
@@ -52,7 +54,11 @@ def get_current_user(
         headers={'WWW-Authenticate': 'Bearer'},
     )
     try:
-        payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = decode(
+            token,
+            sttings.SECRET_KEY,
+            algorithms=[sttings.ALGORITHM]
+        )
         username = payload.get('sub')
         if not username:
             raise credentials_exception
