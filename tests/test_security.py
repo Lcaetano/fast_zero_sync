@@ -9,11 +9,7 @@ def test_jwt():
     data = {'sub': 'teste@mail.com'}
     token = create_access_token(data)
 
-    result = decode(
-        token,
-        sttings.SECRET_KEY,
-        algorithms=[sttings.ALGORITHM]
-    )
+    result = decode(token, sttings.SECRET_KEY, algorithms=[sttings.ALGORITHM])
 
     assert result['sub'] == data['sub']
     assert result['exp']

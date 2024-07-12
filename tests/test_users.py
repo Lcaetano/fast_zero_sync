@@ -26,8 +26,8 @@ def test_create_user_invalido(client, user):
     response = client.post(
         '/users',
         json={
-            'username': 'Test',
-            'email': 'teste@test.com',
+            'username': user.username,
+            'email': 'teste@teste.br',
             'password': 'password',
         },
     )
@@ -42,7 +42,7 @@ def test_create_user_invalido_email(client, user):
         '/users',
         json={
             'username': 'Test1',
-            'email': 'teste@test.com',
+            'email': user.email,
             'password': 'password',
         },
     )
@@ -100,9 +100,9 @@ def test_update_user(client, user, token):
     }
 
 
-def test_update_user_retorno_not_found(client, token):
+def test_update_user_retorno_not_found(client, other_user, token):
     response = client.put(
-        '/users/2',
+        f'/users/{other_user.id}',
         json={
             'username': 'testusername2',
             'email': 'teste@teste.br',
@@ -122,9 +122,9 @@ def test_delete_user(client, user, token):
     assert response.json() == {'message': 'User deleted!'}
 
 
-def test_delete_user_retorno_not_found(client, token):
+def test_delete_user_with_wrong(client, other_user, token):
     response = client.delete(
-        '/users/2', headers={'Authorization': f'Bearer {token}'}
+        f'/users/{other_user.id}', headers={'Authorization': f'Bearer {token}'}
     )
     assert response.status_code == HTTPStatus.FORBIDDEN
     assert response.json() == {'detail': 'Not enough permissions'}
