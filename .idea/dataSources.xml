@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="database" uuid="68ef5a15-86f7-46fb-b10d-2b34bce97f52">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="fastzero_database" uuid="8c8589d5-7d79-40a8-84f8-028fcb4f23a7">
+      <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:\\wsl.localhost\Arch\home\luis\cursos\curso-fastapi\fast_zero\database.db</jdbc-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/app_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar</url>
-        </library>
-      </libraries>
     </data-source>
   </component>
 </project>
