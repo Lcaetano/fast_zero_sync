@@ -11,7 +11,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Instalar o poetry
-        run: pipix install poetry
+        run: pipx install poetry
 
       - name: Instalar dependências
         run: poetry install
